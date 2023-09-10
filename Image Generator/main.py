@@ -2,6 +2,7 @@ import pygame
 import math
 from time import sleep
 import os
+from PIL import Image
 
 # Init pygame
 pygame.init()
@@ -24,6 +25,7 @@ shapeToggle = 0
 wn_width = 500
 wn_height = 386
 wn = pygame.display.set_mode((wn_width, wn_height))
+
 pygame.display.set_caption("Image Shape Drawer(Buckeye Vertical)")
 
 max_type = 3
@@ -45,8 +47,9 @@ def mainLoop():
 
         font = pygame.font.Font('freesansbold.ttf', 250)
         letterColor = colors[0]
+        # Makes text white (254,254,254) sometimes, differentiated from the (255,255,255) background
         if j == 0 or j == 2:
-            letterColor = (255,255,255)
+            letterColor = (254,254,254)
         text = font.render(chr(c), True, letterColor)
         textRect = text.get_rect()
         if i == 2 :
@@ -59,8 +62,11 @@ def mainLoop():
 
         wn.blit(text, textRect)
 
-        fileLocation = "images/" + str(i) + str(j) + str(c) + ".png"
+        fileLocation = "EashanRepository\BuckeyeVerticalObjectDetection\Image Generator\images/" + str(i) + str(j) + str(c) + ".png"
         pygame.image.save(wn, fileLocation)
+        # Converts white pixels to transparent
+        convertImage(fileLocation)
+
 
         if(c == 90):
             c=48
@@ -85,6 +91,24 @@ def mainLoop():
     # End pygame
     pygame.quit()
     quit()
+# Converts White Pixels (255,255,255) to Transparent
+def convertImage(path):
+    img = Image.open(path)
+    img = img.convert("RGBA")
+ 
+    datas = img.getdata()
+ 
+    newData = []
+ 
+    for item in datas:
+        if item[0] == 255 and item[1] == 255 and item[2] == 255:
+            newData.append((255, 255, 255, 0))
+        else:
+            newData.append(item)
+ 
+    img.putdata(newData)
+    img.save(path, "PNG")
+    print("Successful")
 
 def drawShape(type, color):
     if type == 0:
