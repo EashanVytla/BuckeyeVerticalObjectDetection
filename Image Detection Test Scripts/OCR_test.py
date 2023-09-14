@@ -9,7 +9,7 @@ def cleanup_text(text):
 	# using OpenCV
 	return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
-img = cv2.imread('OCR4.png')
+img = cv2.imread("Image Detection Test Scripts/OCR4.png")
 
 #img = imutils.rotate(img, 90)
 
