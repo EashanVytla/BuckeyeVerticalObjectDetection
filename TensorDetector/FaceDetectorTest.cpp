@@ -3,8 +3,9 @@
 using namespace cv;
 
 int main() {
+  const string rtspStreamURL = "rtsp://192.168.1.100:554/stream1";
   // Load the video file
-  VideoCapture capture("video.mp4");
+  VideoCapture capture(rtspStreamURL);
 
   // Check if the video file was opened successfully
   if (!capture.isOpened()) {
