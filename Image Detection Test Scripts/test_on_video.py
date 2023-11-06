@@ -5,7 +5,8 @@ import imutils
 model = YOLO('runs\\detect\\BVTargetModel16\\weights\\best.pt')  # load a pretrained model (recommended for training)
 
 # Open the video file
-video_path = "C:\\Data\\Buckeye Vertical\\Prelim Detection Dataset\\test\\images\\IMG_4422.MOV"
+#video_path = "C:\\Data\\Buckeye Vertical\\Prelim Detection Dataset\\test\\images\\IMG_4422.MOV"
+video_path = ""
 cap = cv2.VideoCapture(video_path)
 
 # Loop through the video frames
