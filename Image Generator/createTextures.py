@@ -5,8 +5,11 @@ import re
 #     guid = findGUID()
 #     replace_guid("C:\Data\Buckeye Vertical\Buckeye Vertical Dataset Creation\Assets\Resources\Images\Materials\\"+"0050.mat.meta", guid)
 #     #if guid != "-":
-        
 
+
+#CHANGE THIS TO THE DIRECTORY OF THE UNITY PROJECT        
+strDirectory = 'C:\Data\Buckeye Vertical\BuckeyeVertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\\'
+strDirectoryMaterials = 'C:\Data\Buckeye Vertical\BuckeyeVertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\Materials\\'
 def replace_guid(filename, new_guid):
 
     # with open(filename, 'w') as f:
@@ -33,7 +36,7 @@ def replace_guid(filename, new_guid):
     #     f.writelines(lines)
 
     print("test 0")
-    f = open("C:\\Data\\Buckeye Vertical\\Buckeye Vertical Dataset Creation\\Assets\\Resources\\Images\\Materials\\0.mat", "r")
+    f = open(strDirectoryMaterials +"0.mat", "r")
     print("test: " + filename)
     copy = open(filename, "x")  # added x since we're creating a new file
 
@@ -74,7 +77,7 @@ def replace_guid(filename, new_guid):
 def findGUID2(name):
 
     # open the text file for reading
-    with open("C:\Data\Buckeye Vertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\\" + name + ".png.meta", 'r') as file:
+    with open(strDirectory + name + ".png.meta", 'r') as file:
         # read the contents of the file into a string variable
         file_contents = file.read()
 
@@ -97,7 +100,7 @@ def findGUID2(name):
 
 
 def create_textures():
-    for i in range(48, 3490):
+    for i in range(48, 7790):
         try:
             temp_str = str(i)
 
@@ -107,7 +110,7 @@ def create_textures():
 
             guid = findGUID2(temp_str)
 
-            replace_guid("C:\\Data\\Buckeye Vertical\\Buckeye Vertical Dataset Creation\\Assets\\Resources\\Images\\Materials\\" + temp_str + ".mat", guid)
+            replace_guid(strDirectoryMaterials + temp_str + ".mat", guid)
         except:
             pass
 
