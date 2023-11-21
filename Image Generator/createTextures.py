@@ -1,78 +1,22 @@
 import re
 
-# def main():
-
-#     guid = findGUID()
-#     replace_guid("C:\Data\Buckeye Vertical\Buckeye Vertical Dataset Creation\Assets\Resources\Images\Materials\\"+"0050.mat.meta", guid)
-#     #if guid != "-":
-
-
 #CHANGE THIS TO THE DIRECTORY OF THE UNITY PROJECT        
-strDirectory = 'C:\Data\Buckeye Vertical\BuckeyeVertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\\'
-strDirectoryMaterials = 'C:\Data\Buckeye Vertical\BuckeyeVertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\Materials\\'
-def replace_guid(filename, new_guid):
+#C:\Data\Buckeye Vertical\BV-Domain-Randomization-Unity-Project\Assets\Resources
+strDirectory = 'C:\Data\Buckeye Vertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\\'
+strDirectoryMaterials = 'C:\Data\Buckeye Vertical\BV-Domain-Randomization-Unity-Project\Assets\Resources\Images\Materials\\'
+def replace_guid(filename, mat_name, new_guid):
+    f = open(strDirectoryMaterials + "0.mat", "r")
+    copy = open(filename, "w")  # added x since we're creating a new file
 
-    # with open(filename, 'w') as f:
-    #     pass
-
-    # with open(filename, 'r') as f:
-    #     lines = f.readlines()
-
-    # guid_count = 0
-    # for i, line in enumerate(lines):
-    #     # if 'guid:' in line:
-    #     #     guid_count += 1
-    #     #     if guid_count == 3:
-    #     #         lines[i] = '        m_Texture: {fileID: 2800000, guid: ' + new_guid + ', type: 3}\n'
-    #     #         break
-
-    #     if 'm_Texture: {fileID: 2800000, guid:' in line:
-    #         guid_count += 1
-    #         if guid_count == 3:
-    #             lines[i] = '        m_Texture: {fileID: 2800000, guid: ' + new_guid + ', type: 3}\n'
-    #             break 
-
-    # with open(filename, 'w') as f:
-    #     f.writelines(lines)
-
-    print("test 0")
-    f = open(strDirectoryMaterials +"0.mat", "r")
-    print("test: " + filename)
-    copy = open(filename, "x")  # added x since we're creating a new file
-
-    print("test 1")
     for line in f:
         if 'm_Texture: {fileID: 2800000, guid:' in line:
-            print("test 2")
             copy.write('        m_Texture: {fileID: 2800000, guid: ' + new_guid + ', type: 3}\n')
+        elif 'm_Name:' in line:
+            copy.write('  m_Name: ' + mat_name + '\n')
         else:
-            print("test 3")
             copy.write(line)
     f.close()
     copy.close()
-        
-
-
-# def findGUID():
-#     # open the text file for reading
-#     with open("C:\\Data\\Buckeye Vertical\\Buckeye Vertical Dataset Creation\\Assets\\Resources\\Images\\" + "1288.png.meta", 'r') as file:
-#         # read the contents of the file into a string variable
-#         file_contents = file.read()
-
-#         # search for the "guid:" in the file contents
-#         guid_start_index = file_contents.find("guid:")
-
-#         # if the "guid:" is found, extract the GUID and print it
-#         if guid_start_index != -1:
-#             guid_end_index = file_contents.find("\n", guid_start_index)
-#             guid = file_contents[guid_start_index + len("guid:"):guid_end_index]
-#             print("GUID found: " + guid)
-#             return guid
-#         else:
-#             print("No GUID found in the file.")
-#             return "-"
-
-
 
 def findGUID2(name):
 
@@ -93,13 +37,9 @@ def findGUID2(name):
         else:
             print("No GUID found in the file.")
             return "-"
-            
-   
-
-
-
 
 def create_textures():
+    
     for i in range(48, 7790):
         try:
             temp_str = str(i)
@@ -110,10 +50,8 @@ def create_textures():
 
             guid = findGUID2(temp_str)
 
-            replace_guid(strDirectoryMaterials + temp_str + ".mat", guid)
+            replace_guid(strDirectoryMaterials + temp_str + ".mat", temp_str, guid)
         except:
             pass
-
-# main()
 
 create_textures()
