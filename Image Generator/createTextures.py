@@ -24,7 +24,7 @@ def findGUID2(name):
     with open(strDirectory + name + ".png.meta", 'r') as file:
         # read the contents of the file into a string variable
         file_contents = file.read()
-
+        print("here1")
         # search for the "guid:" in the file contents
         guid_start_index = file_contents.find("guid:")
 
@@ -40,14 +40,14 @@ def findGUID2(name):
 
 def create_textures():
     
-    for i in range(48, 7790):
+    for i in range(48, 7791):
         try:
             temp_str = str(i)
 
             while len(temp_str) < 4:
                 temp_str = "0" + temp_str
 
-
+           
             guid = findGUID2(temp_str)
 
             replace_guid(strDirectoryMaterials + temp_str + ".mat", temp_str, guid)
