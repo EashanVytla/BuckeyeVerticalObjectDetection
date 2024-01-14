@@ -1,10 +1,26 @@
+from IPython.display import display, Image
 from ultralytics import YOLO
 
-def main():
-    model = YOLO('yolov8n.yaml')  # build a new model from YAML
-    model = YOLO('yolov8n.pt')  # load a pretrained model (recommended for training)
-    model = YOLO('yolov8n.yaml').load('yolov8n.pt')  # build from YAML and transfer weights
-    model.train(data='C:\\Data\\Buckeye Vertical\\Prelim Detection Dataset\\data.yaml', imgsz=1080, batch=10, epochs=30, name="BVTargetModel")
+#load the model
+model = YOLO("yolov8m.pt")#loads nano detection YOLO version 8 neural network
 
-if __name__ == '__main__':
-    main()
+n_epochs = 250
+bs = -1
+gpu_id = 0
+imgSize = 640
+waitNum = 15
+workerNum = 8
+OptimizerChoice = 'auto'
+validate = True
+
+#Train
+results = model.train(data = r"/content/drive/MyDrive/data.yaml",
+                      imgsz = imgSize,
+                      epochs = n_epochs,
+                      batch = bs,
+                      device = gpu_id,
+                      patience = waitNum,
+                      val = validate,
+                      workers = workerNum,)
+#config file draws in the path and training data along with the validation info
+#epochs in number of training phases so more the better  Estimation = 100-300
