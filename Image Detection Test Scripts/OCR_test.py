@@ -9,14 +9,16 @@ def cleanup_text(text):
 	# using OpenCV
 	return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
-img = cv2.imread("Image Detection Test Scripts/OCR4.png")
+img = cv2.imread("C:\Data\Buckeye Vertical\Image Classifier\BuckeyeVerticalObjectDetection\Script Test Data\OCR5x3.png")
 
-#img = imutils.rotate(img, 90)
+img = imutils.rotate(img, -65)
 
 reader = Reader(['en'], gpu=True)
 #   detect the text from the license plate
+#detection = reader.readtext(img, rotation_info=[15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270])
 detection = reader.readtext(img)
 print(detection)
+detection
 
 # loop over the results
 for (bbox, text, prob) in detection:
