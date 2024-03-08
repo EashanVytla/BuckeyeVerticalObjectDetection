@@ -5,13 +5,10 @@ import random
 import os
 from PIL import Image
 
-# Init pygame
 pygame.init()
-
-# Create a clock
 clock = pygame.time.Clock()
 
-# Colors
+#colors
 colors = [
     (0, 0, 0),  # Black
     (255, 0, 0),  # Red
@@ -23,36 +20,36 @@ colors = [
     (255, 165, 0),  # Orange
 ]
 
-# Set up window
+#set up window
 wn_width = 500
 wn_height = 386
-transparent_color = (255, 0, 255)  # Magenta, used as the transparent color
+transparent_color = (255, 0, 255)
 wn = pygame.display.set_mode((wn_width, wn_height))
-wn.fill(transparent_color)  # Fill the background with the transparent color
+wn.fill(transparent_color) 
 pygame.display.set_caption("Random Shape Drawer")
 
 max_type = 7
-num_shapes = 10  # Number of shapes to generate
+num_shapes = 10 #number of shapes to generate***
 
 def main_loop():
-    # Create the output folder if it doesn't exist
+    #create the output folder if it doesn't exist
     output_folder = "outputShape"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
     for i in range(num_shapes):
-        # Draw a random shape with a random color
+        #draw a random shape with a random color
         shape_type = random.randint(0, max_type)
         shape_color = random.choice(colors)
-        wn.fill(transparent_color)  # Clear the window with the transparent color
+        wn.fill(transparent_color)  #clear the window with the transparent color
         draw_shape(shape_type, shape_color)
 
-        # Save the image
+        #cave the image
         image_name = f"random_shape_{i + 1}.png"
         output_path = os.path.join(output_folder, image_name)
         pygame.image.save(wn, output_path)
 
-        # Convert the specific background color to transparency using PIL
+        #convert the specific background color to transparency using PIL
         img = Image.open(output_path)
         img = img.convert("RGBA")
         datas = img.getdata()
@@ -60,14 +57,13 @@ def main_loop():
         newData = []
         for item in datas:
             if item[0] == transparent_color[0] and item[1] == transparent_color[1] and item[2] == transparent_color[2]:
-                newData.append((0, 0, 0, 0))  # Fully transparent
+                newData.append((0, 0, 0, 0))  
             else:
-                newData.append(item)  # Original color
+                newData.append(item)  
 
         img.putdata(newData)
         img.save(output_path, "PNG")
 
-    # End pygame
     pygame.quit()
     quit()
 
@@ -128,12 +124,12 @@ def generate_star_points(outer_radius, center):
 
 def generate_ngon_points(sides, radius, center):
     points = []
-    offset_angle = (3 * math.pi / 2) + (math.pi / sides)  # Start at the top of the screen
+    offset_angle = (3 * math.pi / 2) + (math.pi / sides)  #start at the top of the screen
 
     for k in range(sides):
         angle = 2 * math.pi * k / sides - offset_angle
         x = center[0] + radius * math.cos(angle)
-        y = center[1] + radius * math.sin(angle)  # Pygame's y-axis increases downwards
+        y = center[1] + radius * math.sin(angle)  #pygame's y-axis increases downwards
         points.append((x, y))
 
     return points
