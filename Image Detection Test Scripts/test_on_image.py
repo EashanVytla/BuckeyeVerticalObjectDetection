@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 import imutils
 import numpy as np
-from easyocr import Reader
+#from easyocr import Reader
 from matplotlib import pyplot as plt
 
 def main():
@@ -28,11 +28,11 @@ def main():
     
     #th3 = imutils.rotate(th3, 100)
 
-    reader = Reader(['en'])
+    #reader = Reader(['en'])
     #   detect the text from the license plate
     #detection = reader.readtext(th3, rotation_info=[15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270])
-    detection = reader.readtext(th3)
-    print(detection)
+    #detection = reader.readtext(th3)
+    #print(detection)
 
     # Find the contours in the image
     #contours, hierarchy = cv2.findContours(th3, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)

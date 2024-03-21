@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+from os.path import splitext
 
 # Initialize Pygame
 pygame.init()
@@ -40,7 +41,9 @@ for filename in os.listdir(character_dir):
         image_path = os.path.join(character_dir, filename)
         character_image = pygame.image.load(image_path)
         character_images.append(character_image)
-        character_filenames.append(filename)
+
+        filename_without_ext = splitext(filename)[0]
+        character_filenames.append(filename_without_ext)
 
 # Load shape images
 shape_images = []
