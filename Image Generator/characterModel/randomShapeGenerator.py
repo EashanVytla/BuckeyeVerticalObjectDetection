@@ -29,40 +29,41 @@ wn.fill(transparent_color)
 pygame.display.set_caption("Random Shape Drawer")
 
 max_type = 7
-num_shapes = 10 #number of shapes to generate***
+num_shapes = 62418 #number of shapes to generate***
 
 def main_loop():
-    #create the output folder if it doesn't exist
+    # Create the output folder if it doesn't exist
     output_folder = "outputShape"
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    for i in range(num_shapes):
-        #draw a random shape with a random color
-        shape_type = random.randint(0, max_type)
-        shape_color = random.choice(colors)
-        wn.fill(transparent_color)  #clear the window with the transparent color
-        draw_shape(shape_type, shape_color)
+    shape_count = 0
+    for color_index, color in enumerate(colors):
+        for shape_type in range(max_type + 1):
+            wn.fill(transparent_color)  # Clear the window with the transparent color
+            draw_shape(shape_type, color)
 
-        #cave the image
-        image_name = f"random_shape_{i + 1}.png"
-        output_path = os.path.join(output_folder, image_name)
-        pygame.image.save(wn, output_path)
+            # Save the image
+            image_name = f"shape_{shape_count + 1}.png"
+            output_path = os.path.join(output_folder, image_name)
+            pygame.image.save(wn, output_path)
 
-        #convert the specific background color to transparency using PIL
-        img = Image.open(output_path)
-        img = img.convert("RGBA")
-        datas = img.getdata()
+            # Convert the specific background color to transparency using PIL
+            img = Image.open(output_path)
+            img = img.convert("RGBA")
+            datas = img.getdata()
 
-        newData = []
-        for item in datas:
-            if item[0] == transparent_color[0] and item[1] == transparent_color[1] and item[2] == transparent_color[2]:
-                newData.append((0, 0, 0, 0))  
-            else:
-                newData.append(item)  
+            newData = []
+            for item in datas:
+                if item[0] == transparent_color[0] and item[1] == transparent_color[1] and item[2] == transparent_color[2]:
+                    newData.append((0, 0, 0, 0))
+                else:
+                    newData.append(item)
 
-        img.putdata(newData)
-        img.save(output_path, "PNG")
+            img.putdata(newData)
+            img.save(output_path, "PNG")
+
+            shape_count += 1
 
     pygame.quit()
     quit()
