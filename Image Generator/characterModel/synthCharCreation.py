@@ -4,12 +4,12 @@ import os
 import random
 
 # Set up the window size
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+WINDOW_WIDTH = 640
+WINDOW_HEIGHT = 640
 
 # Set the minimum and maximum sizes for images
 MIN_IMAGE_SIZE = (20, 20)
-MAX_IMAGE_SIZE = (100, 100)
+MAX_IMAGE_SIZE = (50, 50)
 
 # Helper function to check for overlap between rectangles
 def check_overlap(rect1, rect2):
@@ -17,12 +17,11 @@ def check_overlap(rect1, rect2):
     x2, y2, w2, h2 = rect2
     return x1 < x2 + w2 and x1 + w1 > x2 and y1 < y2 + h2 and y1 + h1 > y2
 
-
 # Load character images and labels
 character_images = []
 character_labels = []
-character_dir = "practiceData1"
-label_dir = "practiceLabels1"
+character_dir = "data\OCR\Train\images"
+label_dir = "data\OCR\Train\labels"
 
 for filename in os.listdir(character_dir):
     if filename.endswith(".png"):
@@ -89,6 +88,19 @@ while image_count < num_output_images:
 
         # Resize the character image
         resized_character_image = cv2.resize(character_image, (image_width, image_height))
+
+        # Check the number of channels in the resized character image
+        num_channels = resized_character_image.shape[2] if len(resized_character_image.shape) > 2 else 1
+
+        # Convert the character image to a 3-channel image
+        if num_channels == 1:
+            resized_character_image = cv2.cvtColor(resized_character_image, cv2.COLOR_GRAY2BGR)
+        elif num_channels == 3:
+            # No need for conversion, the image is already in BGR format
+            pass
+        else:
+            print(f"Warning: Unsupported number of channels ({num_channels}) in the character image.")
+            continue
 
         # Resize the shape image to be 20% larger than the character image
         shape_width = int(image_width * 2)
