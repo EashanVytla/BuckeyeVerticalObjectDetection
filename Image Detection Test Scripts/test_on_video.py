@@ -112,8 +112,8 @@ while cap.isOpened():
                     results_char = char_model(frame[int(pos[1].item()):int(pos[3].item()), int(pos[0].item()):int(pos[2].item())])
                     for r_char in results_char:
                         if r_char.boxes.cls.size(dim=0) != 0:
-                            #text += "_" + char_arr[int(r_char.boxes.cls[0].item())]
-                            print("Nothing")
+                            text += "_" + char_arr[int(r_char.boxes.cls[0].item())]
+                            #print("Nothing")
 
                 if(r.boxes.conf[j] > 0.5):
                     cv2.rectangle(frame, (int(pos[0].item()), int(pos[1].item())), (int(pos[2].item()), int(pos[3].item())), (0, 255, 0), 2)
